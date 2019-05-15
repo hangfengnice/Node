@@ -25,6 +25,16 @@
 - 插件art-template 
     + 模版引擎  
 - 核心模块`fs`  
-    + `fs.readFile('./db.json',"utf8",function(err,data){})` 读取文件的时候是二进制形式，可以通过第二个参数utf8 ，告诉她弄成我们可以看懂的        字符    串或者data.toString()
+    + `fs.readFile('./db.json',"utf8",function(err,data){})` 读取文件的时候是二进制形式，可以通过第二个参数utf8 ，告诉她弄成我们可以看懂的        字符    串或者data.toString()  
+    
+## 学习node第三天  
+
+- 模块化  
+    + 每个文件处理单独的内容，类似html,css,js,内容,样式,行为 相分离  
+- callback  
+    + 写的不多需要多写，多理解
+    + 可以通过ajax的异步请求帮助理解  
+- bootstrap  
+    + 模版基本都有，可以复制copy
   
 
