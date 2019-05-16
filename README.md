@@ -2,16 +2,12 @@
 
 
 ## 学习node第一天  
+
 - npm 基本命令  
    +  --global (全局安装，当前在那个目录都可以)  缩写 -g
    + npm install  filename (安装filename)  filename：文件名  
    + npm i filename  效果与上一条相等  i 是 install 的缩写  
    + npm unstall filename
-
--   
-
-
-
 
 ## 学习node第二天  
 
@@ -37,6 +33,59 @@
 - bootstrap  
    + 模版基本都有，可以复制copy  
 - package-lock  
-   + 下载时不会出现提高版本等级的现象，重下插件更加快。
+   + 下载时不会出现提高版本等级的现象，重下插件更加快。  
+   
+## 学习node第四天  
+
+- mongoose  
+   + 基本配置  
+   ```javascript
+   var mongoose = require('mongoose')
+
+var Schema = mongoose.Schema
+
+mongoose.connect('mongodb://127.0.0.1:27017/itcast',{ useNewUrlParser: true })
+
+var userSchema = new Schema({
+    name : String,
+    age : Number,
+    face : String
+
+})
+
+var User = mongoose.model("User",userSchema)
+
+var admin = new User({
+    name : "ying",
+    age: 12
+})
+
+admin.save(function(err,data){
+console.log(data)
+})  
+```  
+- Promise  
+   + Http-server & json-server  
+   + art-template  
+   + jquery  jquery有Promise的类似方法  
+   ```javascript  
+   var data = {}
+        $.get('http://127.0.0.1:3000/user/4')
+            .then(function (user) {
+                data.user = user
+                return $.get('http://127.0.0.1:3000/jobs')
+            })
+            .then(function (jobs) {
+                data.jobs = jobs
+                var htmlStr = template('tpl', data)
+                //   console.log(htmlStr)
+                document.querySelector('#user_form').innerHTML = htmlStr
+                console.log('a')
+
+            })  
+   ```  
+
+   
+
   
 
