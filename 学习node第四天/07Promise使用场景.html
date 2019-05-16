@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="05-promise.js" id='user_form'>
+    </form>
+    <script type='text/template' id='tpl'>
+        <div>
+                <label for="">用户名</label>
+               <input type="text" value='{{user.username}}'>
+            </div>
+            <div>
+                <label for="">年龄 </label>
+                <input type="text" value='{{user.age}}'>
+            </div>
+            <div>
+                <label for="">职业 </label>
+                <select name="" id="">
+                   {{each jobs}}
+                   {{if user.job === $value.id}}
+<option value="{{$value.id}}" selected>{{$value.name}}</option>
+                    {{else}}
+<option value="{{$value.id}}" >{{$value.name}}</option>
+                   {{/if}}
+                   {{/each}}
+                </select>
+            </div>
+    
+    </script>
+    <script src='node_modules/_art-template@4.13.2@art-template/lib/template-web.js'></script>
+    <script src='node_modules/jquery/dist/jquery.js'></script>
+    <script>
+        // get('http://127.0.0.1:3000/user/4', function (userData) {
+
+        //     get('http://127.0.0.1:3000/jobs', function (jobsData) {
+        //         // console.log(userData,jobsData)
+        //         var htmlStr = template('tpl', {
+        //             user: JSON.parse(userData),
+        //             jobs: JSON.parse(jobsData)
+        //         })
+        //         // console.log(htmlStr)
+        //     document.querySelector('#user_form').innerHTML = htmlStr
+
+        //     })
+
+        //     // data = JSON.parse(data)
+        //     // var htmlStr = template('tpl', {
+        //     //     user: data
+        //     // })
+        //     // //   console.log(htmlStr)
+        //     // document.querySelector('#user_form').innerHTML = htmlStr
+        // })
+        var data = {}
+        $.get('http://127.0.0.1:3000/user/4')
+            .then(function (user) {
+                data.user = user
+                return $.get('http://127.0.0.1:3000/jobs')
+            })
+            .then(function (jobs) {
+                data.jobs = jobs
+                var htmlStr = template('tpl', data)
+                //   console.log(htmlStr)
+                document.querySelector('#user_form').innerHTML = htmlStr
+                console.log('a')
+
+            })
+
+        function get(url, callback) {
+            var xml = new XMLHttpRequest()
+            xml.onload = function () {
+                callback(xml.responseText)
+            }
+            xml.open('get', url, true)
+            xml.send()
+        }
+    </script>
+</body>
+
+</html>
