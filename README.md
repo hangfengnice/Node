@@ -40,9 +40,12 @@
 - mongoose  
    + 基本配置  
    ```javascript
+   //引包
    var mongoose = require('mongoose')
    var Schema = mongoose.Schema
+   //{ useNewUrlParser: true } 这个不能少
    mongoose.connect('mongodb://127.0.0.1:27017/itcast',{ useNewUrlParser: true })
+   //限制类型 
    var userSchema = new Schema({
     name : String,
     age : Number,
@@ -53,6 +56,7 @@
     name : "ying",
     age: 1
     })
+    //保存
     admin.save(function(err,data){
     console.log(data)
     })  
@@ -61,12 +65,13 @@
    + Http-server & json-server  
    + art-template  
    + jquery  jquery有Promise的类似方法  
-   ```javascript  
+   ```javascript 
+   //下面是jquery方法
    var data = {}
         $.get('http://127.0.0.1:3000/user/4')
             .then(function (user) {
                 data.user = user
-                return $.get('http://127.0.0.1:3000/jobs')
+                return $.get('http://127.0.0.1:3000/jobs') //返回的值由下方76行jobs接受
             })
             .then(function (jobs) {
                 data.jobs = jobs
