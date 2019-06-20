@@ -1,7 +1,51 @@
-# node  
+# Node  
+
+## 服务器级别的API
+
+- fs -- 操作文件
+
+```javascript
+const fs = require('fs') // 必须要引入"fs" 模块
+
+// 读文件
+fs.readFile('./data/hello.txt',(error, data) => {
+  // 文件中存储的都是二进制 
+  // 二进制转为16进制l
+  console.log(data)//<Buffer 68 65 6c 6c 6f 20 68 61 6e 67 66 65 6e 67 0a>
+  console.log(data.toString()) //hello hangfeng
+  console.log(error) // null
+  // 如果出错 data为undefined
+})
+
+// 写文件
+
+// 只接受一个参数
+fs.writeFile('./data/hi.txt','hello yingying',(error) => {
+  console.log('success')
+  console.log(error) // null
+})
+
+```
+
+- http
+
+```javascript
+const http = require('http')
+const server = http.createServer()
+server.on('request',function(request, response){
+  console.log('收到请求')
+  response.write('hello hangfeng')
+  response.end()
+})
+server.listen(3000,() => {
+  console.log('loading')
+})
+```
+
+```javascript
+```
 
 
-## 学习node第一天  
 
 - npm 基本命令  
    +  --global (全局安装，当前在那个目录都可以)  缩写 -g
