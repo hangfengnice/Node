@@ -12,10 +12,35 @@
 
 - require
 
-- 语法
+- 模块引入语法
 
 ```javascript
 var 自定义变量名称 = require("模块");
+```
+
+- 作用
+
+  - 加载文件模块并且执行里面的代码
+  - 拿到被加载文件模块导出的接口对象
+
+- 模块导出
+  - 推荐使用`module.exports`. `exports` 是`module.exports`引用
+
+```javascript
+var exports = module.exports;
+```
+
+- 导出多个成员
+
+```javascript
+exports.add = () => {};
+exports.num = 2;
+```
+
+- 导出单个成员
+
+```javascript
+module.exports = function() {};
 ```
 
 - 第三方模块加载过程
@@ -37,31 +62,6 @@ var template = require("art-template");
 // 上一级目录没有就上上一级目录的 nodu_modules ...
 // 直到磁盘根目录还没有,最后报错:
 // can not find module xxx
-```
-
-- 作用
-
-  - 加载文件模块并且执行里面的代码
-  - 拿到被加载文件模块导出的接口对象
-
-- 导出
-  - 推荐使用`module.exports`. `exports` 是`module.exports`引用
-
-```javascript
-var exports = module.exports;
-```
-
-- 导出多个成员
-
-```javascript
-exports.add = () => {};
-exports.num = 2;
-```
-
-- 导出单个成员
-
-```javascript
-module.exports = function() {};
 ```
 
 ## 服务器级别的 API
