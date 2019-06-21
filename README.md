@@ -1,15 +1,67 @@
 # Node  
 
-## 基本说明 + 核心模块
+## 核心模块
 
 - fs 文件操作模块
 - http 网络服务构建模块
 - os 操作系统模块
 - path 路径处理模块
+- url 路径操作模块
+
+## 模块系统
 
 - require
+
+- 语法
+
+```javascript
+var 自定义变量名称 = require('模块')
+```
+
+- 第三方模块加载过程
+
+```javascript
+//以 art-template 为例
+var template = require('art-template')
+//先找到当前文件所处目录中的 nodu_modules 目录
+// nodu_modules/art-template
+// nodu_modules/art-template/package.json 文件
+// nodu_modules/art-template/package.json 文件中的 main 属性
+// main 属性中记录了 art-template 的入口模块
+
+// 如果 package.json 文件不存在或者 main 指定的入口模块没有
+// 则 node 会找 nodu_modules/art-template 目录下的 index.js
+// index.js 会作为一个备选项
+
+// 当前目录没有就上一级目录的 nodu_modules
+// 上一级目录没有就上上一级目录的 nodu_modules ...
+// 直到磁盘根目录还没有,最后报错:
+// can not find module xxx
+```
+
+- 作用
   - 加载文件模块并且执行里面的代码
   - 拿到被加载文件模块导出的接口对象
+
+- 导出
+  - 推荐使用`module.exports`. `exports` 是`module.exports`引用
+
+```javascript
+var exports = module.exports
+```
+
+- 导出多个成员
+
+```javascript
+exports.add = () => {}
+exports.num = 2
+```
+
+- 导出单个成员
+
+```javascript
+module.exports = function(){}
+```
 
 ## 服务器级别的API
 
@@ -54,10 +106,17 @@ server.listen(3000,() => {
 })
 ```
 
+- 重定向
+
 ```javascript
+ // 客户端收到服务器响应的状态码是302 自动去响应头中找location
+    res.statusCode = 302
+    res.setHeader('Location','/')
 ```
 
+```javascript
 
+```
 
 - npm 基本命令  
    +  --global (全局安装，当前在那个目录都可以)  缩写 -g
