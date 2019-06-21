@@ -72,7 +72,7 @@ const fs = require('fs') // 必须要引入"fs" 模块
 
 // 读文件
 fs.readFile('./data/hello.txt',(error, data) => {
-  // 文件中存储的都是二进制 
+  // 文件中存储的都是二进制
   // 二进制转为16进制l
   console.log(data)//<Buffer 68 65 6c 6c 6f 20 68 61 6e 67 66 65 6e 67 0a>
   console.log(data.toString()) //hello hangfeng
@@ -118,97 +118,65 @@ server.listen(3000,() => {
 
 ```
 
-- npm 基本命令  
-   +  --global (全局安装，当前在那个目录都可以)  缩写 -g
-   + npm install  filename (安装filename)  filename：文件名  
-   + npm i filename  效果与上一条相等  i 是 install 的缩写  
-   + npm unstall filename
+## npm
 
-## 学习node第二天  
+- 基本命令
+  - --global (全局安装，当前在那个目录都可以)  缩写 -g
+  - npm install  filename (安装filename)  filename：包名  
+  - npm i filename  效果与上一条相等  i 是 install 的缩写  
+  - npm unstall filename 删除包名
 
-- 了解路径问题 
-   +  "/"表示当前文件根目录  
-   +  "./"表示在同一目录下  
-   +  "../"表示上一级目录  
-- 插件express  
-   +  `app.use('/node_modules',express.static('./node_modules/'))` 开放资源资源 设置静态API  
-   +  当express使用art-template时需要装express-art-template和art-template 前者依赖后者 
-- 插件art-template 
-   + 模版引擎  
-- 核心模块`fs`  
-   + `fs.readFile('./db.json',"utf8",function(err,data){})` 读取文件的时候是二进制形式，可以通过第二个参数utf8 ，告诉她弄成我们可以看懂的        字符    串或者data.toString()  
-    
-## 学习node第三天  
+## express
 
-- 模块化  
-   + 每个文件处理单独的内容，类似html,css,js,内容,样式,行为 相分离  
-- callback  
-   + 写的不多需要多写，多理解
-   + 可以通过ajax的异步请求帮助理解  
-- bootstrap  
-   + 模版基本都有，可以复制copy  
-- package-lock  
-   + 下载时不会出现提高版本等级的现象，重下插件更加快。  
-   
-## 学习node第四天  
+- 静态资源
+  - 直接访问`http://127.0.0.1:3000/hello.txt`
 
-- mongoose  
-   + 基本配置  
-   ```javascript
-   //引包
-   var mongoose = require('mongoose')
-   var Schema = mongoose.Schema
-   //{ useNewUrlParser: true } 这个不能少
-   mongoose.connect('mongodb://127.0.0.1:27017/itcast',{ useNewUrlParser: true })
-   //限制类型 
-   var userSchema = new Schema({
-    name : String,
-    age : Number,
-    face : String
-    })
-    var User = mongoose.model("User",userSchema)
-    var admin = new User({
-    name : "ying",
-    age: 1
-    })
-    //保存
-    admin.save(function(err,data){
-    console.log(data)
-    })  
-   ```   
-- Promise  
-   + Http-server & json-server  
-   + art-template  
-   + jquery  jquery有Promise的类似方法  
-   ```javascript 
-   //下面是jquery方法
-   var data = {}
-        $.get('http://127.0.0.1:3000/user/4')
-            .then(function (user) {
-                data.user = user
-                return $.get('http://127.0.0.1:3000/jobs') //返回的值由下方76行jobs接受
-            })
-            .then(function (jobs) {
-                data.jobs = jobs
-                var htmlStr = template('tpl', data)
-                //   console.log(htmlStr)
-                document.querySelector('#user_form').innerHTML = htmlStr
-                console.log('a')
+```javascript
+var express = require('express')
+var app = express()
+app.use(express.static('./public/')) // 访问public目录下不需要/public/
+```
 
-            })  
-   ```    
-## 学习node第五天  
+- 加上/public/访问`http://127.0.0.1:3000/public/hello.txt`
 
-- path模块  
-  + __dirname 和 __filename
-  + **动态的** 获取当前文件或者文件所处目录的绝对路径
-  + 用来解决文件操作路劲的相对路径问题
-  + 因为在文件操作中，相对路径相对于执行 `node` 命令所处的目录
-  + 所以为了尽量避免这个问题，都建议文件操作的相对路劲都转为：**动态的绝对路径**
-  + 方式：`path.join(__dirname, '文件名')` 避免手动添加路径时的小问题
+```javascript
+var express = require('express')
+var app = express()
+app.use('/public/',express.static('./public/')) // 访问public目录需要/public/
+```
 
+- art-template
+  - 当express使用art-template时需要装`express-art-template`和`art-template`前者依赖后者
+  - 配置
 
-   
+```javascript
+// 下面第一个参数为文件的后缀名
+app.engine('html', require('express-art-template'));
+// express 为 response 相应对象提供一个方法: render
+// render 默认无法使用,需要配置模版引擎
+// res.render('html模版名',{模版数据})
+// 第一个参数不写路径,默认到项目目录中 views 目录查找文件
+// 就是说 express 有一个约定: 开发人员把所有视图文件都放到 views 目录中
 
-  
+// 如果希望改路径 app.set('views',目录路径)
+app.get('/',(req,res) => {
+res.render('index.html')
+})
+```
 
+- 获取post请求的数据
+  - bodyParser
+
+```javascript
+var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+//使用
+app.post('/post', (req, res) => {
+  const comment = req.body
+  comment.dateTime = Date()
+  comments.unshift(comment)
+  // 重定向
+  res.redirect('/')
+})
+```
