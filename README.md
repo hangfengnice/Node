@@ -1,5 +1,16 @@
 # Node  
 
+## 基本说明 + 核心模块
+
+- fs 文件操作模块
+- http 网络服务构建模块
+- os 操作系统模块
+- path 路径处理模块
+
+- require
+  - 加载文件模块并且执行里面的代码
+  - 拿到被加载文件模块导出的接口对象
+
 ## 服务器级别的API
 
 - fs -- 操作文件
@@ -34,6 +45,7 @@ const http = require('http')
 const server = http.createServer()
 server.on('request',function(request, response){
   console.log('收到请求')
+  // res.setHeader('Content-type','text/plain;charset=utf-8')// 告诉浏览器按什么模式来解析
   response.write('hello hangfeng')
   response.end()
 })
