@@ -32,3 +32,73 @@ exports.save = function (student, callback) {
   })
 }
 
+//更新
+
+exports.updataById = (student, callback) => {
+  fs.readFile(dbPath, 'utf8', (err, data) => {
+    if(err){
+      return callback(err)
+    }
+    var students = JSON.parse(data).students
+    
+    // EcmaScript 6 find
+    var stu = students.find(item => {
+      return item.id === student.id
+    })
+    // 遍历拷贝对象
+    for(var key in student){
+      stu[key] = student[key]
+    }
+    var fileData =  JSON.stringify({
+      students
+    })
+    fs.writeFile(dbPath, fileData, (err) => {
+      if(err){
+        return callback(err)
+      }
+      callback(null)
+    })
+
+  })
+}
+
+// 
+
+exports.findById = function(id, callback){
+  fs.readFile(dbPath, 'utf8', (err, data) => {
+    if(err){
+      return callback(err)
+    }
+    var students = JSON.parse(data).students
+    var stu = students.find(item => {
+      return item.id === id
+    })
+    callback(null, stu)
+  })
+}
+// 根据ID删除学生
+exports.deleteById = function(id, callback){
+  fs.readFile(dbPath, 'utf8', (err, data) => {
+    if(err){
+      return callback(err)
+    }
+    var students = JSON.parse(data).students
+    // 返回元素下标
+    var deleteId = students.findIndex(item => {
+      return item.id === id
+    })
+    // 删除
+    students.splice(deleteId, 1)
+    
+    var fileData =  JSON.stringify({
+      students
+    })
+    fs.writeFile(dbPath, fileData, (err) => {
+      if(err){
+        return callback(err)
+      }
+      callback(null)
+    })
+  })
+}
+

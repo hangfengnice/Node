@@ -54,6 +54,32 @@ router.post("/students/new", (req, res) => {
   })
 });
 
+router.get("/students/edit", (req, res) => {
+  
+  Student.findById(parseInt(req.query.id), (err, student) => {
+    if (err) {
+      return res.status(500).send("error");
+    }
+    res.render('students-edit.html',{
+      student
+    })
+  })
+});
+
+router.get("/students/delete", (req, res) => {
+  
+  Student.deleteById(parseInt(req.query.id), (err) => {
+    if (err) {
+      return res.status(500).send("error");
+    }
+    res.redirect('/students')
+  })
+});
+
+
+
+
+
 module.exports = router;
 
 // module.exports = ( app ) => {
