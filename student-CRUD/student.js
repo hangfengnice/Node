@@ -17,7 +17,9 @@ exports.save = function(student, callback) {
       return callback(err);
     }
     var students = JSON.parse(data).students;
-    student.id = students.length ? parseInt(students[students.length - 1].id) + 1 : 1;
+    student.id = students.length
+      ? parseInt(students[students.length - 1].id) + 1
+      : 1;
     students.push(student);
     var fileData = JSON.stringify({
       students

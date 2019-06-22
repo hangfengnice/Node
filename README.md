@@ -186,10 +186,30 @@ app.post("/post", (req, res) => {
 
 ```javascript
 const express = require("express");
+
 var router = express.Router();
+
 var Student = require("../student");
 
 router.get("/students", (req, res) => {
+  // fs.readFile('./data/db.json', 'utf8', (err, data) => {
+  //   if(err){
+  //     return res.status(500).send('error')
+  //   }
+  //   // console.log(typeof data) // string
+  //   // 文件读取的是字符串,需要手动转成对象
+  //   var students = JSON.parse(data).students
+  //   res.render('student-index.html', {
+  //     fruits: [
+  //       '西瓜',
+  //       '苹果',
+  //       '橘子',
+  //       '香蕉'
+  //     ],
+  //     students
+  //   })
+  // })
+
   Student.find((err, students) => {
     if (err) {
       return res.status(500).send("error");
@@ -199,6 +219,10 @@ router.get("/students", (req, res) => {
       students
     });
   });
+});
+
+router.get("/students/new", (req, res) => {
+  res.render("students-new.html");
 });
 
 router.post("/students/new", (req, res) => {
@@ -221,6 +245,15 @@ router.get("/students/edit", (req, res) => {
   });
 });
 
+router.post("/students/edit", (req, res) => {
+  Student.updataById(req.body, err => {
+    if (err) {
+      return res.status(500).send("error");
+    }
+    res.redirect("/students");
+  });
+});
+
 router.get("/students/delete", (req, res) => {
   Student.deleteById(parseInt(req.query.id), err => {
     if (err) {
@@ -229,6 +262,31 @@ router.get("/students/delete", (req, res) => {
     res.redirect("/students");
   });
 });
+
+module.exports = router;
+
+// module.exports = ( app ) => {
+//   app.get('/', (req, res) => {
+//     fs.readFile('./data/db.json', 'utf8', (err, data) => {
+//       if(err){
+//         return res.status(500).send('error')
+//       }
+//       // console.log(typeof data) // string
+//       // 文件读取的是字符串,需要手动转成对象
+//       var students = JSON.parse(data).students
+//       res.render('student-index.html', {
+//         fruits: [
+//           '西瓜',
+//           '苹果',
+//           '橘子',
+//           '香蕉'
+//         ],
+//         students
+//       })
+//     })
+//   })
+// }
+
 ```
 
 - 封装文件

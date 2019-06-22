@@ -58,14 +58,14 @@ router.get("/students/edit", (req, res) => {
   });
 });
 
-router.post('/students/edit', (req, res) => {
-  Student.updataById(req.body, (err) => {
+router.post("/students/edit", (req, res) => {
+  Student.updataById(req.body, err => {
     if (err) {
       return res.status(500).send("error");
     }
-    res.redirect('/students')
+    res.redirect("/students");
   });
-})
+});
 
 router.get("/students/delete", (req, res) => {
   Student.deleteById(parseInt(req.query.id), err => {
