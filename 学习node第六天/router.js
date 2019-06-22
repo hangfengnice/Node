@@ -99,10 +99,14 @@ router.post('/register', function (req, res) {
 
 })
 
+
+
 router.get('/logout',function(req,res){
 req.session.user = null
 res.redirect('/login')
 })
+
+
 
 
 // router.post('/register', async function(req,res){
