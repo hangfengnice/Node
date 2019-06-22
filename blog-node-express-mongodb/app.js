@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 app.engine("html", require("./node_modules/express-art-template/src"));
 app.set('views',path.join(__dirname,'./views')) // 默认就在 views 方便修改
 
+// 路由挂载到app
 app.use(router)
 
 app.listen(3000,err => console.log('running..'))
