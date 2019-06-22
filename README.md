@@ -424,3 +424,55 @@ promiseReadFile('./data/hello.txt')
     console.log(data)
   })
 ```
+
+## Path模块
+
+- 路径
+
+```javascript
+MacBook-Pro$ node
+// 获取一个路径的文件名(包含扩展名)
+> path.basename('/a/b/index.js')
+'index.js'
+> path.basename('/a/b/index.js','.js')
+'index'
+> path.basename('/a/b/index.js','.html')
+'index.js'
+// 获取文件路径目录部分
+> path.dirname('/a/b/index.js')
+'/a/b'
+// 获取文件扩展名部分
+> path.extname('/a/b/index.js')
+'.js'
+> path.extname('/a/b/index.html')
+'.html'
+// 是否是绝对路径
+> path.isAbsolute('/a/b/index.js')
+true
+> path.isAbsolute('a/b/index.js')
+false
+> path.isAbsolute('.a/b/index.js')
+false
+// 把路径转对象
+> path.parse('/a/b/index.js')
+{ root: '/',        // 根路径
+  dir: '/a/b',      // 目录
+  base: 'index.js', // 包含后缀名的文件名
+  ext: '.js',       // 后缀名
+  name: 'index' }   // 不包含后缀名的文件名
+// 路径拼接 有效避免出错(自动修正)
+> path.join('/a/','b')
+'/a/b'
+> path.join('/a/','/b')
+'/a/b'
+> path.join('/a/','/b','c','d')
+'/a/b/c/d'
+>
+```
+
+## Node 特殊成员
+
+- __dirname   动态获取 获取当前文件模块所属目录的绝对路径
+- __filename  动态获取 获取当前文件的绝对路径
+- 解决以下问题:
+  - node的文件操作路径中,相对路径设计的就是相对于执行 node 命令所处的路径

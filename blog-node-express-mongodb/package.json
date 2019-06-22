@@ -1,8 +1,8 @@
 {
-  "name": "blog",
+  "name": "blog-node-express-mongodb",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,14 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "art-template": "^4.13.2",
-    "blueimp-md5": "^2.10.0",
     "body-parser": "^1.19.0",
-    "bootstrap": "^4.3.1",
-    "express": "^4.16.4",
+    "express": "^4.17.1",
     "express-art-template": "^1.0.1",
-    "express-session": "^1.16.1",
-    "jquery": "^3.4.1",
-    "mongoose": "^5.5.8",
-    "popper.js": "^1.15.0"
+    "mongoose": "^5.6.0"
   }
 }
