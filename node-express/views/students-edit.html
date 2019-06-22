@@ -12,10 +12,11 @@
   </head>
   <body>
     <div class="container">
-      <h1><a href="/">首页</a><small>编辑学生</small></h1> 
+      <h1><a href="/">首页</a><small>编辑学生</small></h1>
       <hr />
 
-      <form action="/students/new" method="post">
+      <form action="/students/edit" method="post">
+        <input type="hidden" value={{student.id}} name='id'>
         <div class="form-group">
           <label for="name">Your Name</label>
           <input
@@ -25,7 +26,7 @@
             id="name"
             minlength="1"
             placeholder="Your Name"
-            value='{{student.name}}'
+            value="{{ student.name }}"
           />
         </div>
 
@@ -33,25 +34,35 @@
           <label for="name">性别</label>
           <div>
             <label class="radio-inline">
-              <input type="radio" name="gender" id="inlineRadio1" value="0"> 男
+              <input type="radio" name="gender" id="inlineRadio1" value="0" />
+              男
             </label>
             <label class="radio-inline">
-              <input type="radio" name="gender" id="inlineRadio2" value="1"> 女
+              <input type="radio" name="gender" id="inlineRadio2" value="1" />
+              女
             </label>
           </div>
         </div>
 
         <div class="form-group">
           <label for="message">年龄</label>
-         <input type="number" value='{{student.age}}' class="form-control" name = 'age'>
+          <input
+            type="number"
+            value="{{ student.age }}"
+            class="form-control"
+            name="age"
+          />
         </div>
 
         <div class="form-group">
           <label for="message">爱好</label>
-         <input type="text" value='{{student.hobbies}}' class="form-control" name = 'hobbies'>
+          <input
+            type="text"
+            value="{{ student.hobbies }}"
+            class="form-control"
+            name="hobbies"
+          />
         </div>
-
-     
 
         <button type="submit" class="btn btn-default">Submit</button>
       </form>

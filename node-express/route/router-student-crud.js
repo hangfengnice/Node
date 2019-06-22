@@ -1,4 +1,3 @@
-
 const express = require("express");
 
 var router = express.Router();
@@ -28,16 +27,10 @@ router.get("/students", (req, res) => {
     if (err) {
       return res.status(500).send("error");
     }
-    res.render('student-index.html', {
-          fruits: [
-            '西瓜',
-            '苹果',
-            '橘子',
-            '香蕉'
-          ],
-          students
-        })
-
+    res.render("student-index.html", {
+      fruits: ["西瓜", "苹果", "橘子", "香蕉"],
+      students
+    });
   });
 });
 
@@ -50,35 +43,38 @@ router.post("/students/new", (req, res) => {
     if (err) {
       return res.status(500).send("error");
     }
-    res.redirect('/students')
-  })
+    res.redirect("/students");
+  });
 });
 
 router.get("/students/edit", (req, res) => {
-  
   Student.findById(parseInt(req.query.id), (err, student) => {
     if (err) {
       return res.status(500).send("error");
     }
-    res.render('students-edit.html',{
+    res.render("students-edit.html", {
       student
-    })
-  })
+    });
+  });
 });
 
-router.get("/students/delete", (req, res) => {
-  
-  Student.deleteById(parseInt(req.query.id), (err) => {
+router.post('/students/edit', (req, res) => {
+  Student.updataById(req.body, (err) => {
     if (err) {
       return res.status(500).send("error");
     }
     res.redirect('/students')
-  })
+  });
+})
+
+router.get("/students/delete", (req, res) => {
+  Student.deleteById(parseInt(req.query.id), err => {
+    if (err) {
+      return res.status(500).send("error");
+    }
+    res.redirect("/students");
+  });
 });
-
-
-
-
 
 module.exports = router;
 
