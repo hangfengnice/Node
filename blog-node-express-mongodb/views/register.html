@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>莹莹最棒</title>
+    <title>博客</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -16,11 +16,13 @@
     <div class="main">
       <div class="header">
         <a href="/">
-          <img width='100' height='70' src="/public/img/github.jpeg" alt="" />
+          <img width="100" height="70" src="/public/img/github.jpeg" alt="" />
         </a>
         <h1>用户注册</h1>
       </div>
-      <form id="register_form" action="/register" method="post">
+      <form id="register_form">
+        <!-- <form id="register_form" action="/register" method="post"> -->
+
         <div class="form-group">
           <label for="email">邮箱</label>
           <input
@@ -64,16 +66,15 @@
       $("#register_form").on("submit", function(e) {
         e.preventDefault();
         var formData = $(this).serialize();
-
         $.ajax({
           url: "/register",
           type: "post",
           data: formData,
           dataType: "json",
           success: function(data) {
-            var err_code = data.err_code;
+            var err_code = data.error_code;
             if (err_code === 0) {
-              console.log("注册成功");
+              // 服务端重定向针对异步请求无效
               window.location.href = "/";
             } else if (err_code === 1) {
               console.log("邮箱或者昵称已存在");
