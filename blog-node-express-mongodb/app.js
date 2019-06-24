@@ -25,4 +25,15 @@ app.use(
 // 路由挂载到app
 app.use(router);
 
+app.use((req, res) => {
+  res.render('404.html')
+})
+
+// 中间件
+app.use((err, req, res, next) => {
+  res.status(500).json({
+    err_code: 500,
+    message: err.message
+  })
+})
 app.listen(3000, err => console.log("running.."));

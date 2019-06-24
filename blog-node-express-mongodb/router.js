@@ -14,7 +14,7 @@ router.get("/login", (req, res) => {
   res.render("login.html");
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", (req, res, next) => {
   // 获取表单数据
   // 查询数据库用户名是都正确
   // 发送响应数据
@@ -24,10 +24,11 @@ router.post("/login", (req, res) => {
     password: body.password
   }, (err, user) => {
     if(err){
-      return res.status(500).json({
-        err_code: 500,
-        message: err.message
-      })
+      // return res.status(500).json({
+      //   err_code: 500,
+      //   message: err.message
+      // })
+      return next(err)
     }
 
     if(!user){
@@ -46,11 +47,19 @@ router.post("/login", (req, res) => {
   })
 });
 
+router.get('/logout', (req, res) => {
+  // 清除登录状态
+  req.session.user = null
+  // 重定向登录页面  a 链接是同步请求
+
+  res.redirect('/login')
+})
+
 router.get("/register", (req, res) => {
   res.render("register.html");
 });
 
-router.post("/register", (req, res) => {
+router.post("/register", (req, res, next) => {
   // 获取表单提交数据
   const body = req.body;
   User.findOne(
@@ -66,10 +75,11 @@ router.post("/register", (req, res) => {
     },
     (err, data) => {
       if (err) {
-        return res.status(500).json({
-          error_code: 500,
-          message: "server error"
-        });
+        // return res.status(500).json({
+        //   error_code: 500,
+        //   message: "server error"
+        // });
+        return next(err)
       }
       if (data) {
         return res.status(200).json({
@@ -79,10 +89,11 @@ router.post("/register", (req, res) => {
       }
       new User(body).save((err, user) => {
         if (err) {
-          return res.status(500).json({
-            error_code: 500,
-            message: "server error"
-          });
+          // return res.status(500).json({
+          //   error_code: 500,
+          //   message: "server error"
+          // });
+          return next(err)
         }
         req.session.user = user;
         res.status(200).json({
