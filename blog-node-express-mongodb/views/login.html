@@ -20,23 +20,23 @@
       </div>
       <form id="login_form">
         <div class="form-group">
-          <label for="">邮箱</label>
+          <label for="email">邮箱</label>
           <input
             type="email"
             class="form-control"
-            id=""
+            id="email"
             name="email"
             placeholder="Email"
             autofocus
           />
         </div>
         <div class="form-group">
-          <label for="">密码</label>
+          <label for="password">密码</label>
           <a class="pull-right" href="">忘记密码？</a>
           <input
             type="password"
             class="form-control"
-            id=""
+            id="password"
             name="password"
             placeholder="Password"
           />
@@ -50,12 +50,11 @@
         <p>没有账号? <a href="/register">点击创建</a>.</p>
       </div>
     </div>
-    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <script>
       $("#login_form").on("submit", function(e) {
         e.preventDefault();
         var formData = $(this).serialize();
-        console.log(formData);
         $.ajax({
           url: "/login",
           type: "post",

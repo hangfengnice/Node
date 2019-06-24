@@ -15,7 +15,35 @@ router.get("/login", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  res.render();
+  // 获取表单数据
+  // 查询数据库用户名是都正确
+  // 发送响应数据
+  let body = req.body
+  User.findOne({
+    email: body.email,
+    password: body.password
+  }, (err, user) => {
+    if(err){
+      return res.status(500).json({
+        err_code: 500,
+        message: err.message
+      })
+    }
+
+    if(!user){
+      return res.status(200).json({
+        err_code: 1,
+        message: "Email or password is invalid"
+      })
+    }
+
+    req.session.user = user
+
+    res.status(200).json({
+      err_code: 0,
+      message: 'ok'
+    })
+  })
 });
 
 router.get("/register", (req, res) => {
