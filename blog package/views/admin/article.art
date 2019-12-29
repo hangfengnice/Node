@@ -10,7 +10,7 @@
             <div class="title">
                 <h4>文章</h4>
                 <span>找到1篇文章</span>
-                <a href="article-edit.html" class="btn btn-primary new">发布新文章</a>
+                <a href="/admin/article-edit" class="btn btn-primary new">发布新文章</a>
             </div>
             <!-- /分类标题 -->
             <!-- 内容列表 -->
@@ -25,56 +25,42 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{each articles.records}}
                     <tr>
-                        <td>5b9a716cb2d2bf17706bcc0a</td>
-                        <td>JavaScript基础一：基本介绍</td>
-                        <td>2020-12-23</td>
-                        <td>黑马讲师</td>
+                        <td>{{@$value._id}}</td>
+                        <td>{{$value.title}}</td>
+                        <td>{{dateFormat($value.publishDate, 'yyyy-mm-dd') }}</td>
+                        <td>{{$value.author.username}}</td>
                         <td>
                             <a href="article-edit.html" class="glyphicon glyphicon-edit"></a>
                             <i class="glyphicon glyphicon-remove" data-toggle="modal" data-target=".confirm-modal"></i>
                         </td>
                     </tr>
-                    <tr>
-                        <td>5b9a716cb2d2bf17706bcc0a</td>
-                        <td>JavaScript基础二：代码书写位置</td>
-                        <td>2020-12-24</td>
-                        <td>黑马讲师</td>
-                        <td>
-                            <a href="article-edit.html" class="glyphicon glyphicon-edit"></a>
-                            <i class="glyphicon glyphicon-remove" data-toggle="modal" data-target=".confirm-modal"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>5b9a716cb2d2bf17706bcc0a</td>
-                        <td>JavaScript基础三：代码注释</td>
-                        <td>2020-12-25</td>
-                        <td>黑马讲师</td>
-                        <td>
-                            <a href="article-edit.html" class="glyphicon glyphicon-edit"></a>
-                            <i class="glyphicon glyphicon-remove" data-toggle="modal" data-target=".confirm-modal"></i>
-                        </td>
-                    </tr>
+                    {{/each}}
                 </tbody>
             </table>
             <!-- /内容列表 -->
             <!-- 分页 -->
             <ul class="pagination">
-                <li>
-                    <a href="#">
+                {{if articles.page > 1}}
+                  <li>
+                    <a href="/admin/article?page={{articles.page - 1}}">
     		        <span>&laquo;</span>
     		      </a>
                 </li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                    <a href="#">
+                {{/if}}
+                
+                {{each articles.display}}
+                    <li><a href="/admin/article?page={{$value}}">{{$value}}</a></li>
+                {{/each}}
+
+                {{if articles.page < articles.pages}}
+                  <li>
+                    <a href="/admin/article?page={{articles.page - 0 + 1}}">
     		        <span>&raquo;</span>
     		      </a>
                 </li>
+                {{/if}}
             </ul>
             <!-- /分页 -->
         </div>

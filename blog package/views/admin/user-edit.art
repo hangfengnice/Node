@@ -13,7 +13,7 @@
                 <p class="tips">{{message}}</p>
             </div>
             <!-- /分类标题 -->
-            <form class="form-container" action="/admin/user-edit" method="post">
+            <form class="form-container" action="{{link}}" method="post">
                 <div class="form-group">
                     <label>用户名</label>
                     <input name="username" type="text" class="form-control" placeholder="请输入用户名" value="{{user && user.username}}">

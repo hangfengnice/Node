@@ -14,8 +14,15 @@ module.exports  = async (req, res) => {
     let isValid = await bcrypt.compare(password, user.password)
     if (isValid) {
       req.session.username = user.username
+      req.session.role = user.role
+
       req.app.locals.userInfo = user
-      res.redirect('/admin/user')
+
+      if (user.role = 'admin') {
+        res.redirect('/admin/user')
+      } else {
+        res.redirect('/home/')
+      }
     } else {
       res.status(400).render('admin/error', {msg: '邮箱或密码错误'})
     }

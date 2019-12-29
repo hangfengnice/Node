@@ -5,7 +5,7 @@
 
 .list li {
 	width: 530px;
-	height: 430px;
+	height: 630px;
 	background: #FFF;
 	margin-top: 30px;
 	box-shadow: 2px 2px 3px #e1e1e1;
@@ -15,7 +15,7 @@
 .list .thumbnail img {
 	display: block;
 	width: 530px;
-	height: 240px;
+	height: 400px;
 }
 
 .list .content {
